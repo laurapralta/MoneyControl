@@ -1,1 +1,1 @@
-print("Hola soy Sebastian, saludos a todos :)")
+print("Hola soy Samy, saludos a todos")
