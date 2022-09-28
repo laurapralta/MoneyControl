@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Editar Empresa - Ciclo3</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Magra&family=Poppins:wght@300&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+    body{font-family: 'Magra', sans-serif; font-family: 'Poppins', sans-serif;}
+    a{color:black;}
+    a:hover {color: white; text-decoration:none;}
+    h1{font-weight: bolder; color: #5BA8AB; margin-top: 35px; margin-left: 35px;}
+    h3{font-weight: bold; color: #838a88; margin-left: 35px;}
+    .container{margin-top: 30px; background-color: #f0f4da; border-radius: 25px;}
+    .cuerpo{display: flex; flex-direction: row;}
+    section{width: 30%; height: 550px; display: flex; flex-direction: column; align-items: center;}
+    form{margin-top: 50px; margin-left: 30px;}
+    .btn1{margin-top: 20px; background-color: #96D6C5; font-weight:bold; width: 200px; height: 40px; border: none; border-radius: 10px;}
+    .btn1:hover{background-color: black;color: white;}
+    .btn2{margin-top: 35px; margin-right: 35px; background-color: #ffffff; border-style: hidden; font-weight:bold; width: 120px; height: 30px; border-radius: 10px;}
+    .btn2:hover{background-color: black;color: white;}
+    .btn3{margin-top: 35px; margin-right: 35px; background-color: #5BA8AB; border-style: hidden; margin-left: 250px; font-weight:bold; width: 200px; height: 30px; border-radius: 10px;}
+    .btn3:hover{background-color: black;color: white;}
+    img{margin-top: 50px; margin-bottom: 10px; width: 200px;}
+    .row{margin-bottom: 20px;}
+    .form-control{width: 400px;}
+</style>
+</head>
+
+<body>
+<div class="container">
+    <button type="button" class="btn2" style="float:right"><a th:href="@{/logout}">Cerrar Sesión</a></button>
+    <h1> Money Control</h1>
+    <h3> Editar datos de la empresa</h3>
+    <!--Dibujamos la tabla-->
+    <div class="cuerpo">
+        <section>
+            <!-- vamos a crear un boton que sirva para agregar nuevas empresas -->
+            <img src="https://i.postimg.cc/vmQjSJN8/Logo-4.png" class="logo"/>
+            <button type="button" class="btn1"><a th:href="@{/VerEmpresas}">Empresa</a></button>
+            <button type="button" class="btn1"><a th:href="@{/ViewEmployee}">Empleados</a></button>
+            <button type="button" class="btn1"><a th:href="@{/ViewMovements}">Ingresos / egresos</a></button>
+        </section>
+        <div>
+            <!--Crear formulario para llenar los datos de la empresa y guardarlo en el objeto emp -->
+            <form th:action="@{/ActualizarEmpresa}" th:object="${emp}" method="post">
+
+                <!--Campo para id-->
+                <div class="row">
+                    <div class="form-group col-md-36">
+                        <label class="col-md-5" for="id">ID de la Empresa:</label>
+                        <div class="col-md-6">
+                            <input type="text" th:field="*{id}" class="form-control" id="id" required="required" readonly></div>
+                    </div>
+                </div>
+
+                <!--Campo para nombre-->
+                <div class="row">
+                    <div class="form-group col-md-36">
+                        <label class="col-md-5" for="nombre">Nombre de la Empresa:</label>
+                        <div class="col-md-6">
+                            <input type="text" th:field="*{name}" class="form-control" id="nombre" required="required"></div>
+                    </div>
+                </div>
+
+                <!--Campo para direccion-->
+                <div class="row">
+                    <div class="form-group col-md-36">
+                        <label class="col-md-5" for="direccion">Direccion de la Empresa:</label>
+                        <div class="col-md-6">
+                            <input type="text" th:field="*{address}" class="form-control" id="direccion" required="required"></div>
+                    </div>
+                </div>
+
+                <!--Campo para telefono-->
+                <div class="row">
+                    <div class="form-group col-md-36">
+                        <label class="col-md-5" for="telefono">Telefono de la Empresa:</label>
+                        <div class="col-md-6">
+                            <input type="text" th:field="*{phone}" class="form-control" id="telefono" required="required"></div>
+                    </div>
+                </div>
+
+                <!--Campo para NIT-->
+                <div class="row">
+                    <div class="form-group col-md-36">
+                        <label class="col-md-5" for="NIT">NIT o RUT de la Empresa:</label>
+                        <div class="col-md-6">
+                            <input type="text" th:field="*{nit}" class="form-control" id="NIT" required="required"></div>
+                    </div>
+                </div>
+
+                <!--Boton para enviar todo y ejecutar accion -->
+                <div class="row">
+                    <div class="col-md-2">
+                        <button class="btn3">Actualizar Empresa</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

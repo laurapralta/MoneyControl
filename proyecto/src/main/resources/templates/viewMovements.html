@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Lista de Movimientos - Ciclo3</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Magra&family=Poppins:wght@300&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <style> /* Estilos de la aplicacion */
+    body{font-family: 'Magra', sans-serif; font-family: 'Poppins', sans-serif;}
+    a{color:black;}
+    a:hover {color: white; text-decoration:none;}
+    h1{font-weight: bolder; color: #E2D46B; margin-top: 15px; margin-left: 35px;}
+    h3{font-weight: bold; color: #838a88; margin-left: 35px;}
+    p{margin-top: 10px; margin-right: 35px;}
+    .container{margin-top: 30px; background-color: #f0f4da; border-radius: 25px;}
+    .cuerpo{display: flex; flex-direction: row;}
+    section{width: 30%; height: 550px; display: flex; flex-direction: column; align-items: center;}
+    table{margin-top: 50px; text-align: center;}
+    .btn1{margin-top: 20px; background-color: #eae2a9; font-weight:bold; width: 200px; height: 40px; border: none; border-radius: 10px;}
+    .btn1:hover{background-color: black;color: white;}
+    .btn2{margin-top: 35px; margin-right: 35px; background-color: #ffffff; border-style: hidden; font-weight:bold; width: 120px; height: 30px; border-radius: 10px;}
+    .btn2:hover{background-color: black;color: white;}
+    .btn3{margin-top: 15px; margin-right: 35px; background-color: #eae2a9; border-style: hidden; margin-left: 250px; font-weight:bold; width: 200px; height: 30px; border-radius: 10px;}
+    .btn3:hover{background-color: black;color: white;}
+    img{margin-top: 50px; margin-bottom: 10px; width: 200px;}
+    .btnA{background-color: #96D6C5; height: 30px; border: none; border-radius: 10px;}
+    .btnA:hover{background-color: black; color: white;}
+    .btnB{background-color: #96D6C5; height: 30px; border: none; border-radius: 10px;}
+    .btnB:hover{background-color: black; color: white;}
+    .btnC{background-color: #dce184; height: 30px; border: none; border-radius: 10px;}
+    .btnC:hover{background-color: black;color: white;}
+    .btnD{background-color: #f0c6d5; height: 30px; border: none; border-radius: 10px;}
+    .btnD:hover{background-color: black;color: white;}
+</style>
+</head>
+
+
+<body>
+<div class="container">
+    <p th:inline="text" class="text-right">User: [[${#httpServletRequest.remoteUser}]]</p>
+    <button type="button" class="btn2" style="float:right"><a th:href="@{/logout}">Cerrar Sesión</a></button>
+    <h1> Money Control</h1>
+    <h3> Control de ingresos y egresos</h3>
+    <!--Dibujamos la tabla-->
+    <div class="cuerpo">
+        <section>
+            <!-- vamos a crear un boton que sirva para agregar nuevas empresas -->
+            <img src="https://i.postimg.cc/8P7ZKhBY/Logo-6.png" class="logo"/>
+            <button type="button" class="btn1"><a th:href="@{/VerEmpresas}">Empresa</a></button>
+            <button type="button" class="btn1"><a th:href="@{/ViewEmployee}">Empleados</a></button>
+            <button type="button" class="btn1"><a th:href="@{/ViewMovements}">Ingresos / egresos</a></button>
+        </section>
+        <div>
+            <table class="table table-bordered">
+                <tr>
+                    <th>ID</th>
+                    <th class="text-right">Valor</th>
+                    <th>Concepto</th>
+                    <th>Usuario Responsable</th>
+                    <th>Fecha del Movimiento</th>
+                    <th>Editar</th>
+                    <th>Eliminar</th>
+                </tr>
+
+                <!--Llenamos la tabla dibujada-->
+                <!--En nuestro controller, creamos en viewMovimientos un modelo con un atributo llamado movlist donde esta guardada la lista de todos los movimientos-->
+                <tr th:each="movements : ${movementslist}">
+                    <td th:text="${movements.id_movement}"></td>
+                    <td class="text-right" th:text="${#numbers.formatCurrency(movements.amount)}"></td>
+                    <td th:if="${movements.concept=='1'}">Papeleria</td>
+                    <td th:if="${movements.concept=='2'}">Servicios Publicos/privados</td>
+                    <td th:if="${movements.concept=='3'}">Operativos</td>
+                    <td th:if="${movements.concept=='4'}">Caja Menor</td>
+                    <td th:if="${movements.concept=='5'}">Tributario</td>
+                    <td th:if="${movements.concept=='6'}">Mobiliario</td>
+                    <td th:if="${movements.concept=='7'}">Maquinaria y Equipo</td>
+                    <td th:if="${movements.concept=='8'}">Nomina</td>
+                    <!-- usuario-->
+                    <td th:text="${movements.user.nombre}"></td>
+                    <td th:text="${#dates.format(movements.createAt, 'dd/MM//yyyy')}"></td>
+
+                    <td><button type="button" class="btnC"><a th:href="@{/EditMovements/{id}(id=${movements.id_movement})}">Editar</a></button></td>
+                    <td><button type="button" class="btnD"><a th:href="@{/DeleteMovement/{id}(id=${movements.id_movement})}">Eliminar</a></button></td>
+                </tr>
+            </table>
+            <div class ="row">
+                <div class="form-group col-md-12">
+                    <label class="col-md-3" for="TotalMovimientos">Total Movimientos</label>
+                    <div class="col-md-6">
+                        <p th:text="${#numbers.formatCurrency(sumAmount)}" class="form-control" id="TotalMovimientos"></p>
+                    </div>
+                </div>
+            </div>
+            <button type="button" class="btn3"><a th:href="@{/AddMovements}">Agregar Movimiento</a></button>
+        </div>
+    </div>
+</div>
+
+
+<script th:inline="javascript">
+    window.onload=function(){
+
+        var msg= [[${mensaje}]];
+        if (msg == "saveOK"){
+            Command : toastr["success"]("Movimiento registrado con éxito!")
+            }
+        else if (msg == "updateOK"){
+            Command : toastr["success"]("Movimiento actualizado con éxito!")
+        }
+        else if (msg == "deleteOK"){
+            Command : toastr["error"]("Movimiento eliminado con éxito!")
+        }
+        else if (msg == "deleteError"){
+            Command : toastr["error"]("Movimiento no pudo ser eliminado!")
+        }
+        toastr.options={
+            "positionClass": "toast-top-right",
+            "showDuration":"300",
+            "showMethod":"fadeIn",
+            "hideMethod":"fadeOut",
+        }
+
+
+    }
+
+</script>
+
+</body>
+</html>
